@@ -54,16 +54,23 @@
       border-bottom: 1px solid var(--border);
       background: transparent;
     }
+    
     .cover img{
       width: 100%;
-      height: 200px;       /* desktop/laptop */
-      object-fit: cover;   /* crop nicely */
-      object-position: center;
+      height: 220px;        /* desktop */
+      object-fit: cover;
+      object-position: top center; /* 👈 CHEIA */
       display: block;
+}
+
     }
     @media (max-width: 600px){
-      .cover img{ height: 140px; } /* mobile */
+      .cover img{
+        height: 140px;
+        object-position: top center;
+      }
     }
+
 
     /* Layout */
     .wrap{

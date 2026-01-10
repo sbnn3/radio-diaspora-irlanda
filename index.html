@@ -25,7 +25,8 @@
     }
 
     *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    html, body{ height:100%; overflow-x:hidden; } /* prevent horizontal scrolling */
+
     body{
       margin:0;
       font-family: -apple-system, system-ui, Segoe UI, Roboto, Arial, sans-serif;
@@ -36,6 +37,7 @@
         linear-gradient(180deg, var(--bg1), var(--bg2));
     }
 
+    /* subtle pattern overlay (very light) */
     body:before{
       content:"";
       position:fixed;
@@ -46,30 +48,29 @@
       background-size: 22px 22px;
     }
 
-    /* COVER full width */
-    .cover {
-      width: 100vw;
-      margin-left: calc(50% - 50vw);
-      overflow: hidden;
-    }
-    .cover img {
+    /* COVER full width but short (banner) */
+    .cover{
       width: 100%;
-      height: auto;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      background: transparent;
+    }
+    .cover img{
+      width: 100%;
+      height: 220px;       /* desktop/laptop */
+      object-fit: cover;   /* crop nicely */
+      object-position: center;
       display: block;
     }
-    @media (max-width: 600px) {
-      .cover img {
-        height: 180px;
-        object-fit: cover;
-      }
+    @media (max-width: 600px){
+      .cover img{ height: 140px; } /* mobile */
     }
 
     /* Layout */
     .wrap{
-      min-height: calc(100vh - 180px); /* lasă loc pentru cover + footer */
       display:flex;
       justify-content:center;
-      padding: 22px 16px 28px;
+      padding: 18px 12px 24px;
     }
 
     .container{
@@ -77,14 +78,17 @@
       max-width: 980px;
     }
 
-    /* Card general */
+    /* Card base */
     .card{
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 16px;
+      padding: 14px;
       backdrop-filter: blur(8px);
+      width: 100%;
+      max-width: 520px;   /* keeps cards smaller on big screens */
+      margin: 0 auto;
     }
 
     .card h2{
@@ -102,57 +106,20 @@
       text-align:center;
     }
 
-    /* Asculta Live: centrat, max width */
-    .listen{
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* iframe player: responsive */
+    /* Responsive iframe player (NO fixed width attributes) */
     .player-embed{
       width: 100%;
+      height: 380px;
       border: 0;
       border-radius: 14px;
-      overflow: hidden;
-      display: block;
-      background: #fff;
-      height: 400px;
+      overflow:hidden;
+      display:block;
+      background:#fff;
     }
+
     @media (max-width: 420px){
+      .card{ max-width: 360px; }
       .player-embed{ height: 420px; }
-    }
-
-    /* Footer + Contact bar */
-    footer{
-      border-top: 1px solid var(--border);
-      background: rgba(255,255,255,0.65);
-      backdrop-filter: blur(10px);
-    }
-
-    .footer-inner{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 14px 16px;
-      display:flex;
-      flex-wrap: wrap;
-      align-items:center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .footer-left{
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .contact-mini{
-      display:flex;
-      flex-wrap: wrap;
-      align-items:center;
-      justify-content:center;
-      gap: 10px 12px;
-      text-align:center;
     }
 
     .btn{
@@ -168,6 +135,8 @@
       font-size: 14px;
       box-shadow: 0 12px 20px rgba(194,31,31,.18);
       transition: transform .12s ease, background .12s ease;
+      max-width: 260px;
+      width: auto;
       white-space: nowrap;
     }
     .btn:hover{ background: var(--accent2); transform: translateY(-1px); }
@@ -177,16 +146,26 @@
       color: var(--muted);
     }
 
-    @media (max-width: 560px){
-      .footer-inner{
-        justify-content:center;
-        text-align:center;
-      }
-      .footer-left{
-        width: 100%;
-      }
+    footer{
+      margin-top: 18px;
+      padding: 14px 12px 18px;
+      text-align:center;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(10px);
     }
 
+    .footer-contact{
+      margin-top: 10px;
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      align-items:center;
+    }
+
+    /* Prefer reduced motion */
     @media (prefers-reduced-motion: reduce){
       .btn{ transition:none; }
     }
@@ -202,8 +181,7 @@
   <div class="wrap">
     <div class="container">
 
-      <!-- Ascultă Live centrat -->
-      <section class="card listen">
+      <section class="card">
         <h2>Ascultă Live</h2>
         <p>Dacă playerul nu pornește automat, apasă Play.</p>
 
@@ -220,17 +198,12 @@
     </div>
   </div>
 
-  <!-- Footer + Contact jos -->
   <footer>
-    <div class="footer-inner">
-      <div class="footer-left">
-        © <span id="y"></span> Radio Diaspora Irlanda • Live din online
-      </div>
+    © <span id="y"></span> Radio Diaspora Irlanda • Live din online
 
-      <div class="contact-mini">
-        <a class="btn" href="mailto:contact@radiodiasporairlanda.live">Contactează-ne</a>
-        <div class="small">contact@radiodiasporairlanda.live</div>
-      </div>
+    <div class="footer-contact">
+      <a class="btn" href="mailto:contact@radiodiasporairlanda.live">Contactează-ne</a>
+      <div class="small">contact@radiodiasporairlanda.live</div>
     </div>
   </footer>
 

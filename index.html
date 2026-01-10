@@ -57,11 +57,18 @@
     
     .cover img{
       width: 100%;
-      height: 220px;        /* desktop */
+      height: 220px;
       object-fit: cover;
-      object-position: top center; /* 👈 CHEIA */
+      object-position: 50% 15%;
       display: block;
-}
+    }
+    
+    @media (max-width: 600px){
+      .cover img{
+        height: 140px;
+        object-position: 50% 10%;
+      }
+    }
 
     }
     @media (max-width: 600px){

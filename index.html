@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Radio Diaspora Irlanda</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Arial, sans-serif;
+      color: #fff;
+      background:
+        linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75)),
+        url("https://images.unsplash.com/photo-1600112616631-3a8b6b5c2b52");
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .logo img {
+      max-width: 220px;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: rgba(20,20,30,0.85);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.4);
+    }
+
+    iframe {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+    }
+
+    .playlist iframe {
+      height: 240px;
+    }
+
+    .player iframe {
+      height: 160px;
+    }
+
+    .contact-btn {
+      display: inline-block;
+      padding: 14px 26px;
+      background: #c21f1f;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: background .2s;
+    }
+
+    .contact-btn:hover {
+      background: #a31919;
+    }
+
+    footer {
+      font-size: 12px;
+      opacity: 0.7;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- LOGO -->
+    <div class="logo">
+      <img src="assets/logo.png" alt="Radio Diaspora Irlanda">
+    </div>
+
+    <!-- PLAYER -->
+    <div class="card player">
+      <iframe 
+        src="PLAYER_IFRAME_URL"
+        allow="autoplay">
+      </iframe>
+    </div>
+
+    <!-- PLAYLIST -->
+    <div class="card playlist">
+      <iframe 
+        src="PLAYLIST_IFRAME_URL">
+      </iframe>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="card">
+      <a class="contact-btn" href="mailto:EMAIL_TAU">
+        Contactează-ne
+      </a>
+    </div>
+
+    <footer>
+      © Radio Diaspora Irlanda • Muzică românească & moldovenească
+    </footer>
+
+  </div>
+
+</body>
+</html>

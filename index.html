@@ -6,117 +6,97 @@
   <title>Radio Diaspora Irlanda</title>
 
   <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
 
   <meta name="description" content="Radio Diaspora Irlanda LIVE — muzică românească și moldovenească pentru românii și moldovenii din Irlanda." />
 
   <style>
     :root{
-      --bg1:#cfe9ff;
-      --bg2:#ffffff;
-      --card:#ffffffcc;
+      --bg1:#bfe3ff;   /* light blue dominant */
+      --bg2:#e9f5ff;
+      --card:#ffffffdd;
       --text:#0b1220;
       --muted:#44506a;
-      --border:#e6eef7;
-      --shadow: 0 14px 40px rgba(14, 30, 55, .10);
-      --radius: 18px;
+      --border:#d9e8f7;
+      --shadow: 0 14px 40px rgba(14,30,55,.12);
+      --radius:18px;
       --accent:#c21f1f;
       --accent2:#a31818;
-      --modalShadow: 0 26px 70px rgba(10, 20, 40, .28);
     }
 
     *{ box-sizing:border-box; }
 
-    html, body{
+    html,body{
       margin:0;
       padding:0;
       overflow-x:hidden;
-      background:#fff;
-      font-family: -apple-system, system-ui, Segoe UI, Roboto, Arial, sans-serif;
+      font-family:-apple-system,system-ui,Segoe UI,Roboto,Arial,sans-serif;
       color:var(--text);
+      background:#e9f5ff;
     }
 
-    /* Background doar pentru zona principală */
+    /* Background principal */
     .page-bg{
       background:
-        radial-gradient(900px 600px at 20% 10%, rgba(255,255,255,.9), rgba(255,255,255,0)),
-        radial-gradient(900px 600px at 80% 0%, rgba(255,255,255,.75), rgba(255,255,255,0)),
+        radial-gradient(1000px 700px at 20% 0%, #ffffffaa, transparent),
+        radial-gradient(1000px 700px at 80% 10%, #ffffff88, transparent),
         linear-gradient(180deg, var(--bg1), var(--bg2));
-    }
-    .page-bg:before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      opacity:.06;
-      background-image: radial-gradient(circle at 1px 1px, rgba(20,40,80,.5) 1px, transparent 0);
-      background-size: 22px 22px;
     }
 
     .wrap{
       display:flex;
       justify-content:center;
-      padding: 18px 12px 24px;
+      padding:24px 12px 32px;
     }
 
     .container{
       width:100%;
-      max-width:1100px;
+      max-width:1200px;
     }
 
     /* GRID */
     .grid{
       display:grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-      max-width: 980px;
-      margin: 0 auto;
+      grid-template-columns:1fr;
+      gap:20px;
+      max-width:1000px;
+      margin:0 auto;
     }
-    @media (min-width: 860px){
+
+    @media(min-width:860px){
       .grid{
-        grid-template-columns: 1fr 1fr;
-        align-items:flex-start;
+        grid-template-columns:1fr 1fr;
+        align-items:center;
       }
     }
 
     /* CARD */
     .card{
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      padding: 16px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+      backdrop-filter:blur(10px);
       width:100%;
     }
 
-    /* Cover card */
-    .cover-card{
-      padding: 10px;
-    }
-
-    /* ✅ Desktop/laptop: ridică stânga, coboară dreapta (fine tuning) */
-    @media (min-width: 860px){
-      .cover-card{ margin-top: 34px; }     /* mai SUS decât înainte */
-      .player-card{ margin-top: 58px; }    /* un pic mai JOS */
-    }
-
+    /* COVER */
     .cover-card img{
       width:100%;
       height:auto;
-      display:block;
       border-radius:14px;
+      display:block;
     }
 
-    /* Player */
+    /* PLAYER */
     .card h2{
-      margin: 0 0 6px;
+      margin:0 0 6px;
       font-size:16px;
       text-align:center;
     }
 
     .card p{
-      margin: 0 0 12px;
+      margin:0 0 12px;
       font-size:14px;
       color:var(--muted);
       text-align:center;
@@ -125,7 +105,6 @@
     .player-wrap{
       display:flex;
       justify-content:center;
-      align-items:center;
     }
 
     .player-embed{
@@ -134,17 +113,35 @@
       border:0;
       border-radius:14px;
       background:#fff;
-      box-shadow: 0 10px 24px rgba(0,0,0,.12);
+      box-shadow:0 10px 24px rgba(0,0,0,.15);
     }
 
-    @media (max-width: 480px){
+    /* MOBILE */
+    @media(max-width:480px){
       .player-embed{
         width:100%;
         max-width:340px;
         height:180px;
       }
-      .cover-card{ margin-top:0; }
-      .player-card{ margin-top:0; }
+    }
+
+    /* 🖥️ ECRANE FOARTE MARI (TV, 4K) */
+    @media(min-width:1600px){
+      .player-embed{
+        width:420px;
+        height:220px;
+      }
+
+      .grid{
+        max-width:1200px;
+      }
+    }
+
+    @media(min-width:2200px){
+      .player-embed{
+        width:460px;
+        height:260px;
+      }
     }
 
     /* FOOTER */
@@ -154,9 +151,9 @@
     }
 
     .footer-inner{
-      max-width:980px;
+      max-width:1000px;
       margin:0 auto;
-      padding:16px 12px;
+      padding:18px 12px;
       display:flex;
       justify-content:center;
       align-items:center;
@@ -168,363 +165,69 @@
     }
 
     .btn{
-      padding:10px 16px;
+      padding:10px 18px;
       border-radius:999px;
       background:var(--accent);
       color:#fff;
       text-decoration:none;
       font-weight:700;
       font-size:13px;
-      box-shadow: 0 10px 20px rgba(194,31,31,.2);
-      transition: transform .12s ease, background .12s ease;
-      white-space:nowrap;
-      border: 0;
-      cursor: pointer;
+      box-shadow:0 10px 20px rgba(194,31,31,.25);
+      transition:all .15s ease;
     }
 
     .btn:hover{
       background:var(--accent2);
       transform:translateY(-1px);
     }
-
-    .email{ white-space:nowrap; }
-
-    /* =========================
-       MODAL CONTACT FORM
-       ========================= */
-
-    .modal-backdrop{
-      position: fixed;
-      inset: 0;
-      background: rgba(8, 12, 18, .45);
-      backdrop-filter: blur(4px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      z-index: 9999;
-    }
-
-    .modal-backdrop.is-open{ display:flex; }
-
-    .modal{
-      width: min(560px, 100%);
-      background: rgba(255,255,255,.92);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      box-shadow: var(--modalShadow);
-      padding: 16px;
-    }
-
-    .modal-header{
-      display:flex;
-      align-items:flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 8px;
-    }
-
-    .modal-title{
-      margin:0;
-      font-size: 16px;
-      letter-spacing: .2px;
-    }
-
-    .modal-subtitle{
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.35;
-    }
-
-    .icon-btn{
-      appearance:none;
-      border:0;
-      background: transparent;
-      cursor:pointer;
-      font-size: 22px;
-      line-height: 1;
-      padding: 6px 10px;
-      border-radius: 10px;
-      color: #2a3447;
-    }
-    .icon-btn:hover{ background: rgba(20,40,80,.08); }
-
-    .form{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap: 6px;
-    }
-
-    .field label{
-      font-size: 12px;
-      color: #2a3447;
-      font-weight: 650;
-    }
-
-    .field input,
-    .field textarea,
-    .field select{
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.95);
-      color: var(--text);
-      outline: none;
-      font-size: 14px;
-    }
-
-    .field textarea{
-      min-height: 110px;
-      resize: vertical;
-      grid-column: 1 / -1;
-    }
-
-    .field.full{ grid-column: 1 / -1; }
-
-    .form-actions{
-      grid-column: 1 / -1;
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 6px;
-      flex-wrap: wrap;
-    }
-
-    .muted-note{
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .btn-secondary{
-      background: rgba(20,40,80,.10);
-      color: #243049;
-      box-shadow: none;
-    }
-    .btn-secondary:hover{
-      background: rgba(20,40,80,.16);
-      transform: translateY(-1px);
-    }
-
-    .success{
-      display:none;
-      margin-top: 10px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(20,160,90,.25);
-      background: rgba(20,160,90,.08);
-      color: #0f5132;
-      font-size: 13px;
-    }
-
-    @media (max-width: 520px){
-      .form{ grid-template-columns: 1fr; }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .btn{ transition:none; }
-    }
   </style>
 </head>
 
 <body>
 
-  <div class="page-bg">
-    <div class="wrap">
-      <div class="container">
+<div class="page-bg">
+  <div class="wrap">
+    <div class="container">
 
-        <div class="grid">
+      <div class="grid">
 
-          <!-- COVER (stânga desktop / sus mobile) -->
-          <header class="card cover-card">
-            <img src="assets/cover.png" alt="Radio Diaspora Irlanda LIVE">
-          </header>
+        <!-- COVER -->
+        <section class="card cover-card">
+          <img src="assets/cover.png" alt="Radio Diaspora Irlanda LIVE">
+        </section>
 
-          <!-- PLAYER (dreapta desktop / jos cover pe mobile) -->
-          <section class="card player-card">
-            <h2>Ascultă Live</h2>
-            <p>Dacă playerul nu pornește automat, apasă Play.</p>
+        <!-- PLAYER -->
+        <section class="card">
+          <h2>Ascultă Live</h2>
+          <p>Dacă playerul nu pornește automat, apasă Play.</p>
 
-            <div class="player-wrap">
-              <iframe
-                class="player-embed"
-                src="https://listen.zeno.fm/player/radio-diaspora-irlanda?autoplay=true"
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"
-              ></iframe>
-            </div>
-          </section>
-
-        </div>
+          <div class="player-wrap">
+            <iframe
+              class="player-embed"
+              src="https://listen.zeno.fm/player/radio-diaspora-irlanda?autoplay=true"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy">
+            </iframe>
+          </div>
+        </section>
 
       </div>
+
     </div>
   </div>
+</div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <div>© <span id="y"></span> Radio Diaspora Irlanda • Live din online</div>
-      <button class="btn" id="openContact" type="button">Contactează-ne</button>
-      <div class="email">radiodiasporairlanda@outlook.ie</div>
-    </div>
-  </footer>
-
-  <!-- MODAL CONTACT -->
-  <div class="modal-backdrop" id="contactModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
-      <div class="modal-header">
-        <div>
-          <h3 class="modal-title" id="contactTitle">Contactează Radio Diaspora Irlanda</h3>
-          <p class="modal-subtitle">
-            Completează formularul și îți răspundem cât mai repede.
-          </p>
-        </div>
-        <button class="icon-btn" id="closeContact" type="button" aria-label="Închide">×</button>
-      </div>
-
-      <!-- IMPORTANT:
-           GitHub Pages e static. Pentru trimitere email, folosește Formspree / EmailJS.
-           Varianta de mai jos e pentru FORMSPREE.
-           1) Creezi endpoint Formspree și pui link-ul în action=""
-      -->
-      <form class="form" id="contactForm"
-            action="https://formspree.io/f/REPLACE_ME"
-            method="POST">
-
-        <div class="field">
-          <label for="nume">Nume</label>
-          <input id="nume" name="nume" type="text" autocomplete="family-name" required>
-        </div>
-
-        <div class="field">
-          <label for="prenume">Prenume</label>
-          <input id="prenume" name="prenume" type="text" autocomplete="given-name" required>
-        </div>
-
-        <div class="field full">
-          <label for="email">Adresa de email</label>
-          <input id="email" name="email" type="email" autocomplete="email" required>
-        </div>
-
-        <div class="field full">
-          <label for="telefon">Număr de telefon</label>
-          <input id="telefon" name="telefon" type="tel" autocomplete="tel">
-        </div>
-
-        <div class="field full">
-          <label for="motiv">Motivul pentru care doriți să luați legătura cu noi</label>
-          <textarea id="motiv" name="motiv" placeholder="Scrie aici mesajul tău..." required></textarea>
-        </div>
-
-        <!-- Optional: setează “Reply-To” pentru a răspunde direct utilizatorului -->
-        <input type="hidden" name="_replyto" value="">
-
-        <!-- Optional: subiect email -->
-        <input type="hidden" name="_subject" value="Mesaj nou - Radio Diaspora Irlanda">
-
-        <div class="form-actions">
-          <div class="muted-note">
-            Mesajul va fi trimis la: <strong>radiodiasporairlanda@outlook.ie</strong>
-          </div>
-          <div style="display:flex; gap:10px; align-items:center;">
-            <button class="btn btn-secondary" id="cancelBtn" type="button">Renunță</button>
-            <button class="btn" type="submit">Trimite</button>
-          </div>
-        </div>
-
-        <div class="success" id="successBox">
-          Mulțumim! Mesajul a fost trimis. ✅
-        </div>
-      </form>
-    </div>
+<footer>
+  <div class="footer-inner">
+    <div>© <span id="y"></span> Radio Diaspora Irlanda • Live din online</div>
+    <a class="btn" href="mailto:radiodiasporairlanda@outlook.ie">Contactează-ne</a>
+    <div>radiodiasporairlanda@outlook.ie</div>
   </div>
+</footer>
 
-  <script>
-    // Year
-    document.getElementById("y").textContent = new Date().getFullYear();
-
-    // Modal open/close
-    const modal = document.getElementById("contactModal");
-    const openBtn = document.getElementById("openContact");
-    const closeBtn = document.getElementById("closeContact");
-    const cancelBtn = document.getElementById("cancelBtn");
-    const form = document.getElementById("contactForm");
-    const successBox = document.getElementById("successBox");
-
-    function openModal(){
-      modal.classList.add("is-open");
-      modal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-      // focus first input
-      setTimeout(() => document.getElementById("nume").focus(), 0);
-    }
-
-    function closeModal(){
-      modal.classList.remove("is-open");
-      modal.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-      successBox.style.display = "none";
-    }
-
-    openBtn.addEventListener("click", openModal);
-    closeBtn.addEventListener("click", closeModal);
-    cancelBtn.addEventListener("click", closeModal);
-
-    // click outside closes
-    modal.addEventListener("click", (e) => {
-      if(e.target === modal) closeModal();
-    });
-
-    // ESC closes
-    window.addEventListener("keydown", (e) => {
-      if(e.key === "Escape" && modal.classList.contains("is-open")) closeModal();
-    });
-
-    // Optional: async submit (stays in modal, shows success)
-    // Works with Formspree endpoint.
-    form.addEventListener("submit", async (e) => {
-      // If you didn't replace the endpoint, stop.
-      if (form.action.includes("REPLACE_ME")) {
-        e.preventDefault();
-        alert("Setează endpoint-ul Formspree în action=\"...\" (înlocuiește REPLACE_ME).");
-        return;
-      }
-
-      e.preventDefault();
-      // set replyto to user email
-      const email = document.getElementById("email").value || "";
-      const replyto = form.querySelector('input[name="_replyto"]');
-      if (replyto) replyto.value = email;
-
-      try{
-        const formData = new FormData(form);
-        const res = await fetch(form.action, {
-          method: "POST",
-          body: formData,
-          headers: { "Accept": "application/json" }
-        });
-
-        if(res.ok){
-          successBox.style.display = "block";
-          form.reset();
-        }else{
-          alert("Nu s-a putut trimite mesajul. Încearcă din nou.");
-        }
-      }catch(err){
-        alert("Eroare de rețea. Încearcă din nou.");
-      }
-    });
-  </script>
+<script>
+  document.getElementById("y").textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>

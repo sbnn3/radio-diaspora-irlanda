@@ -1,116 +1,237 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Radio Diaspora Irlanda</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Muzică românească și moldovenească pentru românii și moldovenii din Irlanda." />
 
   <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Arial, sans-serif;
-      color: #fff;
+    :root{
+      --bg1:#cfe9ff;   /* light blue */
+      --bg2:#ffffff;   /* white */
+      --card:#ffffffcc;
+      --text:#0b1220;
+      --muted:#44506a;
+      --border:#e6eef7;
+      --shadow: 0 14px 40px rgba(14, 30, 55, .10);
+      --radius: 18px;
+      --accent:#c21f1f;
+      --accent2:#a31818;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: -apple-system, system-ui, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
       background:
-        linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75)),
-        url("https://images.unsplash.com/photo-1600112616631-3a8b6b5c2b52");
-      background-size: cover;
-      background-position: center;
-      min-height: 100vh;
+        radial-gradient(900px 600px at 20% 10%, rgba(255,255,255,.9), rgba(255,255,255,0)),
+        radial-gradient(900px 600px at 80% 0%, rgba(255,255,255,.75), rgba(255,255,255,0)),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
     }
 
-    .container {
-      max-width: 500px;
-      margin: auto;
-      padding: 30px 20px;
-      text-align: center;
+    /* subtle pattern overlay (very light) */
+    body:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.08;
+      background-image:
+        radial-gradient(circle at 1px 1px, rgba(20,40,80,.5) 1px, transparent 0);
+      background-size: 22px 22px;
     }
 
-    .logo img {
-      max-width: 220px;
-      margin-bottom: 25px;
+    .wrap{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 28px 16px 40px;
     }
 
-    .card {
-      background: rgba(20,20,30,0.85);
-      border-radius: 18px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,.4);
+    .container{
+      width:100%;
+      max-width: 980px;
     }
 
-    iframe {
-      width: 100%;
-      border: none;
-      border-radius: 12px;
+    .header{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap: 14px;
+      margin-bottom: 18px;
+      text-align:center;
     }
 
-    .playlist iframe {
-      height: 240px;
+    .logo{
+      width: clamp(140px, 22vw, 220px);
+      height:auto;
+      display:block;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.10));
     }
 
-    .player iframe {
-      height: 160px;
+    .tagline{
+      margin:0;
+      color:var(--muted);
+      font-size: clamp(14px, 2.3vw, 16px);
+      line-height:1.35;
+      max-width: 48ch;
     }
 
-    .contact-btn {
-      display: inline-block;
-      padding: 14px 26px;
-      background: #c21f1f;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 30px;
-      font-weight: 600;
-      transition: background .2s;
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
     }
 
-    .contact-btn:hover {
-      background: #a31919;
+    @media (min-width: 860px){
+      .grid{
+        grid-template-columns: 1fr 1fr;
+        align-items:start;
+      }
     }
 
-    footer {
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      backdrop-filter: blur(8px);
+    }
+
+    .card h2{
+      margin: 0 0 10px;
+      font-size: 16px;
+      letter-spacing:.2px;
+    }
+
+    .card p{
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height:1.4;
+    }
+
+    .frame{
+      width:100%;
+      border:0;
+      border-radius: 14px;
+      overflow:hidden;
+      display:block;
+      background:#fff;
+    }
+
+    /* Responsive heights for embeds */
+    .player-frame{ height: 160px; }
+    .playlist-frame{ height: 320px; }
+
+    @media (max-width: 420px){
+      .player-frame{ height: 170px; }
+      .playlist-frame{ height: 360px; }
+      .card{ padding: 14px; }
+    }
+
+    .contact{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap: 10px;
+      text-align:center;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: var(--accent);
+      color:#fff;
+      text-decoration:none;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: 0 12px 20px rgba(194,31,31,.18);
+      transition: transform .12s ease, background .12s ease;
+      width: min(260px, 100%);
+    }
+    .btn:hover{ background: var(--accent2); transform: translateY(-1px); }
+
+    .small{
       font-size: 12px;
-      opacity: 0.7;
-      margin-top: 15px;
+      color: var(--muted);
+    }
+
+    footer{
+      margin-top: 16px;
+      text-align:center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Prefer reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .btn{ transition:none; }
     }
   </style>
 </head>
 
 <body>
+  <div class="wrap">
+    <div class="container">
 
-  <div class="container">
+      <div class="header">
+        <img class="logo" src="assets/logo.png" alt="Radio Diaspora Irlanda" />
+        <p class="tagline">Muzică românească &amp; moldovenescă, pentru românii și moldovenii din Irlanda.</p>
+      </div>
 
-    <!-- LOGO -->
-    <div class="logo">
-      <img src="assets/logo.png" alt="Radio Diaspora Irlanda">
+      <div class="grid">
+
+        <section class="card">
+          <h2>Ascultă Live</h2>
+          <p>Dacă playerul nu pornește automat, apasă Play.</p>
+          <iframe
+            class="frame player-frame"
+            src="PLAYER_IFRAME_URL_HERE"
+            allow="autoplay"
+            loading="lazy"
+          ></iframe>
+        </section>
+
+        <section class="card">
+          <h2>Playlist</h2>
+          <p>Melodiile difuzate recent.</p>
+          <iframe
+            class="frame playlist-frame"
+            src="PLAYLIST_IFRAME_URL_HERE"
+            loading="lazy"
+          ></iframe>
+        </section>
+
+        <section class="card" style="grid-column: 1 / -1;">
+          <div class="contact">
+            <h2 style="margin:0;">Contact</h2>
+            <p style="margin:0; max-width:60ch;">
+              Pentru dedicații, sugestii, publicitate sau colaborări, scrie-ne.
+            </p>
+            <a class="btn" href="mailto:contact@radiodiasporairlanda.live">Contactează-ne</a>
+            <div class="small">Email: contact@radiodiasporairlanda.live</div>
+          </div>
+        </section>
+
+      </div>
+
+      <footer>
+        © <span id="y"></span> Radio Diaspora Irlanda • Live din online
+      </footer>
     </div>
-
-    <!-- PLAYER -->
-    <div class="card player">
-      <iframe 
-        src="PLAYER_IFRAME_URL"
-        allow="autoplay">
-      </iframe>
-    </div>
-
-    <!-- PLAYLIST -->
-    <div class="card playlist">
-      <iframe 
-        src="PLAYLIST_IFRAME_URL">
-      </iframe>
-    </div>
-
-    <!-- CONTACT -->
-    <div class="card">
-      <a class="contact-btn" href="mailto:EMAIL_TAU">
-        Contactează-ne
-      </a>
-    </div>
-
-    <footer>
-      © Radio Diaspora Irlanda • Muzică românească & moldovenească
-    </footer>
-
   </div>
 
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

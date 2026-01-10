@@ -25,19 +25,30 @@
     }
 
     *{ box-sizing:border-box; }
-    html, body{ height:100%; overflow-x:hidden; }
+
+    html, body{
+      height:100%;
+      overflow-x:hidden;
+      margin:0;
+      background:#fff; /* ✅ dacă există spațiu sub footer, e alb */
+    }
 
     body{
-      margin:0;
       font-family: -apple-system, system-ui, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--text);
+    }
+
+    /* ✅ punem background-ul DOAR pe zona de conținut (nu pe tot body) */
+    .page-bg{
+      min-height: calc(100vh - 120px); /* lasă loc pentru footer */
       background:
         radial-gradient(900px 600px at 20% 10%, rgba(255,255,255,.9), rgba(255,255,255,0)),
         radial-gradient(900px 600px at 80% 0%, rgba(255,255,255,.75), rgba(255,255,255,0)),
         linear-gradient(180deg, var(--bg1), var(--bg2));
     }
 
-    body:before{
+    /* pattern discret DOAR în zona de conținut */
+    .page-bg:before{
       content:"";
       position:fixed;
       inset:0;
@@ -47,7 +58,6 @@
       background-size: 22px 22px;
     }
 
-    /* Layout */
     .wrap{
       display:flex;
       justify-content:center;
@@ -59,7 +69,22 @@
       max-width: 1100px;
     }
 
-    /* Cards */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: start;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 860px){
+      .grid{
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+      }
+    }
+
     .card{
       background: var(--card);
       border: 1px solid var(--border);
@@ -85,13 +110,19 @@
       text-align:center;
     }
 
+    /* ✅ COVER: coborât puțin pe desktop/laptop ca să fie “la mijloc” */
     .cover-card{
       padding: 10px;
+    }
+    @media (min-width: 860px){
+      .cover-card{
+        margin-top: 70px;  /* 👈 asta îl coboară */
+      }
     }
 
     .cover-card img{
       width: 100%;
-      height: auto;        /* no crop */
+      height: auto;
       display:block;
       border-radius: 14px;
     }
@@ -106,109 +137,111 @@
       overflow:hidden;
     }
 
-    /* ✅ Desktop/Laptop: 2 columns (cover left, player right) */
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      align-items: start;
-      max-width: 980px;
-      margin: 0 auto;
-    }
-
-    @media (min-width: 860px){
-      .grid{
-        grid-template-columns: 1fr 1fr; /* left / right */
-      }
-    }
-
-    /* ✅ Mobile: stack cover -> player -> contact */
     @media (max-width: 420px){
       .grid{ max-width: 360px; }
       .card{ padding: 14px; }
-      .cover-card{ padding: 8px; }
+      .cover-card{ padding: 8px; margin-top: 0; }
       .player-embed{ height: 540px; }
     }
 
-    /* Footer + contact */
+    /* ✅ Footer: 1 singur rând pe desktop/laptop */
     footer{
-      padding: 14px 12px 18px;
+      border-top: 1px solid var(--border);
+      background: #ffffff; /* ✅ oprește “background-ul” aici */
+    }
+
+    .footer-inner{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 16px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 14px;
+      flex-wrap: wrap; /* pe mobil se duce pe rânduri */
       text-align:center;
       color: var(--muted);
       font-size: 12px;
-      border-top: 1px solid var(--border);
-      background: rgba(255,255,255,0.65);
-      backdrop-filter: blur(10px);
-    }
-
-    .footer-contact{
-      margin-top: 10px;
-      display:flex;
-      flex-direction:column;
-      gap: 8px;
-      align-items:center;
     }
 
     .btn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding: 12px 18px;
+      padding: 10px 16px;
       border-radius: 999px;
       background: var(--accent);
       color:#fff;
       text-decoration:none;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13px;
       box-shadow: 0 12px 20px rgba(194,31,31,.18);
       transition: transform .12s ease, background .12s ease;
-      max-width: 260px;
       white-space: nowrap;
     }
     .btn:hover{ background: var(--accent2); transform: translateY(-1px); }
 
-    .small{ font-size: 12px; color: var(--muted); }
-    @media (prefers-reduced-motion: reduce){ .btn{ transition:none; } }
+    .email{
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* pe mobil: rămâne frumos, pe 2-3 rânduri */
+    @media (max-width: 480px){
+      .footer-inner{
+        gap: 10px;
+      }
+      .email{
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .btn{ transition:none; }
+    }
   </style>
 </head>
 
 <body>
 
-  <div class="wrap">
-    <div class="container">
+  <!-- ✅ Background doar pentru zona de sus -->
+  <div class="page-bg">
+    <div class="wrap">
+      <div class="container">
 
-      <div class="grid">
-        <!-- Cover LEFT (desktop/laptop), TOP (mobile) -->
-        <header class="card cover-card">
-          <img src="assets/cover.png" alt="Radio Diaspora Irlanda LIVE">
-        </header>
+        <div class="grid">
+          <!-- Cover LEFT -->
+          <header class="card cover-card">
+            <img src="assets/cover.png" alt="Radio Diaspora Irlanda LIVE">
+          </header>
 
-        <!-- Player RIGHT (desktop/laptop), SECOND (mobile) -->
-        <section class="card">
-          <h2>Ascultă Live</h2>
-          <p>Dacă playerul nu pornește automat, apasă Play.</p>
+          <!-- Player RIGHT -->
+          <section class="card">
+            <h2>Ascultă Live</h2>
+            <p>Dacă playerul nu pornește automat, apasă Play.</p>
 
-          <iframe
-            class="player-embed"
-            src="https://listen.zeno.fm/player/radio-diaspora-irlanda-live"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            frameborder="0"
-            scrolling="no"
-            loading="lazy"
-          ></iframe>
-        </section>
+            <iframe
+              class="player-embed"
+              src="https://listen.zeno.fm/player/radio-diaspora-irlanda-live"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              frameborder="0"
+              scrolling="no"
+              loading="lazy"
+            ></iframe>
+          </section>
+        </div>
+
       </div>
-
     </div>
   </div>
 
-  <!-- Contactează-ne (jos pe toate; pe mobil e "după player" cum ai cerut) -->
+  <!-- ✅ Footer: tot pe un singur rând pe desktop -->
   <footer>
-    © <span id="y"></span> Radio Diaspora Irlanda • Live din online
-
-    <div class="footer-contact">
+    <div class="footer-inner">
+      <div>© <span id="y"></span> Radio Diaspora Irlanda • Live din online</div>
       <a class="btn" href="mailto:contact@radiodiasporairlanda.live">Contactează-ne</a>
-      <div class="small">contact@radiodiasporairlanda.live</div>
+      <div class="email">contact@radiodiasporairlanda.live</div>
     </div>
   </footer>
 

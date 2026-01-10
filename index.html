@@ -37,7 +37,6 @@
         linear-gradient(180deg, var(--bg1), var(--bg2));
     }
 
-    /* pattern discret */
     body:before{
       content:"";
       position:fixed;
@@ -57,38 +56,17 @@
 
     .container{
       width:100%;
-      max-width: 980px;
+      max-width: 1100px;
     }
 
-    /* Card base + same width rule */
-    .card,
-    .cover-card{
+    /* Cards */
+    .card{
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
       width: 100%;
-      max-width: 520px;   /* ✅ aceeași lățime ca cardul */
-      margin: 0 auto;
-    }
-
-    /* Cover (same width as card) */
-    .cover-card{
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 14px;
-    }
-
-    .cover-card img{
-      width: 100%;
-      height: auto;       /* ✅ fără crop */
-      display:block;
-      border-radius: 14px;
-    }
-
-    /* Content card */
-    .card{
       padding: 16px;
     }
 
@@ -107,6 +85,17 @@
       text-align:center;
     }
 
+    .cover-card{
+      padding: 10px;
+    }
+
+    .cover-card img{
+      width: 100%;
+      height: auto;        /* no crop */
+      display:block;
+      border-radius: 14px;
+    }
+
     .player-embed{
       width: 100%;
       height: 480px;
@@ -117,13 +106,31 @@
       overflow:hidden;
     }
 
+    /* ✅ Desktop/Laptop: 2 columns (cover left, player right) */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: start;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 860px){
+      .grid{
+        grid-template-columns: 1fr 1fr; /* left / right */
+      }
+    }
+
+    /* ✅ Mobile: stack cover -> player -> contact */
     @media (max-width: 420px){
-      .card, .cover-card{ max-width: 360px; }
+      .grid{ max-width: 360px; }
       .card{ padding: 14px; }
       .cover-card{ padding: 8px; }
       .player-embed{ height: 540px; }
     }
 
+    /* Footer + contact */
     footer{
       padding: 14px 12px 18px;
       text-align:center;
@@ -170,31 +177,35 @@
   <div class="wrap">
     <div class="container">
 
-      <!-- ✅ COVER centrat, aceeași lățime ca “Ascultă Live” -->
-      <header class="cover-card">
-        <img src="assets/cover.png" alt="Radio Diaspora Irlanda LIVE">
-      </header>
+      <div class="grid">
+        <!-- Cover LEFT (desktop/laptop), TOP (mobile) -->
+        <header class="card cover-card">
+          <img src="assets/cover.png" alt="Radio Diaspora Irlanda LIVE">
+        </header>
 
-      <!-- ✅ CARD Ascultă Live -->
-      <section class="card">
-        <h2>Ascultă Live</h2>
-        <p>Dacă playerul nu pornește automat, apasă Play.</p>
+        <!-- Player RIGHT (desktop/laptop), SECOND (mobile) -->
+        <section class="card">
+          <h2>Ascultă Live</h2>
+          <p>Dacă playerul nu pornește automat, apasă Play.</p>
 
-        <iframe
-          class="player-embed"
-          src="https://listen.zeno.fm/player/radio-diaspora-irlanda-live"
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          frameborder="0"
-          scrolling="no"
-          loading="lazy"
-        ></iframe>
-      </section>
+          <iframe
+            class="player-embed"
+            src="https://listen.zeno.fm/player/radio-diaspora-irlanda-live"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            frameborder="0"
+            scrolling="no"
+            loading="lazy"
+          ></iframe>
+        </section>
+      </div>
 
     </div>
   </div>
 
+  <!-- Contactează-ne (jos pe toate; pe mobil e "după player" cum ai cerut) -->
   <footer>
     © <span id="y"></span> Radio Diaspora Irlanda • Live din online
+
     <div class="footer-contact">
       <a class="btn" href="mailto:contact@radiodiasporairlanda.live">Contactează-ne</a>
       <div class="small">contact@radiodiasporairlanda.live</div>

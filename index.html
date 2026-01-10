@@ -255,20 +255,18 @@
     const es = new EventSource(url);
 
     es.onmessage = (e) => {
-      try {
-        const data = JSON.parse(e.data);
+  try {
+    const data = JSON.parse(e.data);
 
-        const artist = data.artist || data.Artist || "";
-        const title  = data.title  || data.song || data.Song || "";
+    if (data.streamTitle) {
+      addTrack(data.streamTitle);
+    }
 
-        const combined = [artist, title].filter(Boolean).join(" - ");
-        if (combined) addTrack(combined);
-        else addTrack(e.data);
+  } catch {
+    // ignorăm ping-urile
+  }
+};
 
-      } catch {
-        addTrack(e.data);
-      }
-    };
 
     es.onerror = () => {
       nowEl.textContent = "Metadata indisponibil momentan.";

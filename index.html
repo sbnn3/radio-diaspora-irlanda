@@ -47,27 +47,27 @@
       background-size: 22px 22px;
     }
 
-    /* ✅ COVER: bandă sus, full width (fără spații albe) */
+    /* ✅ COVER PERFECT: full-width + text mereu vizibil (fără crop) */
     .cover{
       width: 100%;
-      overflow: hidden;
       border-bottom: 1px solid var(--border);
-      background: #fff;
+      background: #f7f4ee; /* crem: se potrivește cu bannerul */
     }
 
-    .cover img{
+    .cover-inner{
       width: 100%;
-      height: 170px;         /* desktop/laptop */
-      object-fit: cover;     /* umple lățimea */
-      object-position: 50% 50%; /* centru (cover-ul tău nou e ok la center) */
-      display:block;
+      height: 170px; /* desktop */
+      background-image: url("assets/cover.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain; /* ✅ NU taie */
     }
 
     @media (max-width: 700px){
-      .cover img{ height: 140px; }
+      .cover-inner{ height: 140px; }
     }
     @media (max-width: 420px){
-      .cover img{ height: 125px; }
+      .cover-inner{ height: 125px; }
     }
 
     /* MAIN */
@@ -168,7 +168,7 @@
 <body>
 
   <header class="cover">
-    <img src="assets/cover.png" alt="Radio Diaspora Irlanda LIVE">
+    <div class="cover-inner" role="img" aria-label="Radio Diaspora Irlanda LIVE"></div>
   </header>
 
   <main class="wrap">

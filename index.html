@@ -202,12 +202,82 @@
         </section>
 
         <section class="card">
-          <h2>Playlist</h2>
-          <p>Melodiile difuzate recent.</p>
-          <iframe class="frame playlist-frame" src="https://zeno.fm/station/vokyfnx2sg1vv/recently-played"></iframe>
+  <h2>Difuzate recent</h2>
+  <p>Ultimele melodii difuzate pe radio.</p>
 
+  <div id="nowPlaying" style="font-weight:700; margin:10px 0 8px;">
+    Se încarcă…
+  </div>
 
-        </section>
+  <ol id="recentList" style="margin:0; padding-left:18px;">
+  </ol>
+
+  <div style="margin-top:10px; font-size:12px; opacity:0.7;">
+    *Lista se completează automat cât timp radioul este live.
+  </div>
+</section>
+
+<script>
+  // MOUNT POINT CONFIRMAT DIN ZENO
+  const MOUNT = "vokyfnx2sg1vv/source";
+
+  const nowEl = document.getElementById("nowPlaying");
+  const listEl = document.getElementById("recentList");
+
+  const recent = [];
+  const MAX = 10;
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[c]));
+  }
+
+  function render() {
+    listEl.innerHTML = recent.map(t => `<li>${escapeHtml(t)}</li>`).join("");
+  }
+
+  function addTrack(text) {
+    const track = text.trim();
+    if (!track) return;
+    if (recent[0] === track) return; // evită duplicatele
+
+    recent.unshift(track);
+    if (recent.length > MAX) recent.pop();
+
+    nowEl.textContent = track;
+    render();
+  }
+
+  const url = "https://api.zeno.fm/mounts/metadata/subscribe/" + encodeURIComponent(MOUNT);
+
+  try {
+    const es = new EventSource(url);
+
+    es.onmessage = (e) => {
+      try {
+        const data = JSON.parse(e.data);
+
+        const artist = data.artist || data.Artist || "";
+        const title  = data.title  || data.song || data.Song || "";
+
+        const combined = [artist, title].filter(Boolean).join(" - ");
+        if (combined) addTrack(combined);
+        else addTrack(e.data);
+
+      } catch {
+        addTrack(e.data);
+      }
+    };
+
+    es.onerror = () => {
+      nowEl.textContent = "Metadata indisponibil momentan.";
+    };
+
+  } catch {
+    nowEl.textContent = "Browserul nu suportă metadata live.";
+  }
+</script>
 
         <section class="card" style="grid-column: 1 / -1;">
           <div class="contact">

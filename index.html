@@ -8,7 +8,7 @@
   <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
 
-  <meta name="description" content="Muzică românească și moldovenească pentru românii și moldovenii din Irlanda." />
+  <meta name="description" content="Radio Diaspora Irlanda LIVE — muzică românească și moldovenească pentru românii și moldovenii din Irlanda." />
 
   <style>
     :root{
@@ -25,7 +25,7 @@
     }
 
     *{ box-sizing:border-box; }
-    html, body{ height:100%; overflow-x:hidden; } /* prevent horizontal scrolling */
+    html, body { height: 100%; overflow-x: hidden; } /* elimină scroll lateral */
 
     body{
       margin:0;
@@ -34,6 +34,191 @@
       background:
         radial-gradient(900px 600px at 20% 10%, rgba(255,255,255,.9), rgba(255,255,255,0)),
         radial-gradient(900px 600px at 80% 0%, rgba(255,255,255,.75), rgba(255,255,255,0)),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+
+    /* pattern foarte discret */
+    body:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.07;
+      background-image: radial-gradient(circle at 1px 1px, rgba(20,40,80,.5) 1px, transparent 0);
+      background-size: 22px 22px;
+    }
+
+    /* COVER: bandă sus, stabilă */
+    .cover{
+      width: 100%;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      background: transparent;
+    }
+
+    /* IMPORTANT: folosim height fix + cover, dar imaginea e gândită perfect pentru asta */
+    .cover img{
+      width: 100%;
+      height: 220px;        /* desktop/laptop */
+      object-fit: cover;
+      object-position: center; /* cover-ul tău nou e “perfect” la center */
+      display:block;
+    }
+
+    @media (max-width: 700px){
+      .cover img{ height: 160px; }
+    }
+
+    @media (max-width: 420px){
+      .cover img{ height: 140px; } /* mobil mic */
+    }
+
+    /* Layout */
+    .wrap{
+      display:flex;
+      justify-content:center;
+      padding: 22px 12px 26px;
+    }
+
+    .container{
+      width:100%;
+      max-width: 980px;
+    }
+
+    /* Card (centru) */
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      backdrop-filter: blur(10px);
+      width: 100%;
+      max-width: 520px; /* card mai “mic” și elegant */
+      margin: 0 auto;
+    }
+
+    .card h2{
+      margin: 0 0 10px;
+      font-size: 16px;
+      letter-spacing: .2px;
+      text-align:center;
+    }
+
+    .card p{
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+      text-align:center;
+    }
+
+    /* Player: mai înalt ca să încapă nume artist/titlu */
+    .player-embed{
+      width: 100%;
+      height: 460px;     /* desktop */
+      border: 0;
+      border-radius: 14px;
+      display:block;
+      background:#fff;
+      overflow:hidden;
+    }
+
+    @media (max-width: 420px){
+      .card{ max-width: 360px; padding: 14px; }
+      .player-embed{ height: 520px; } /* mobil */
+    }
+
+    /* Footer + contact */
+    footer{
+      margin-top: 18px;
+      padding: 14px 12px 18px;
+      text-align:center;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(10px);
+    }
+
+    .footer-contact{
+      margin-top: 10px;
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      align-items:center;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: var(--accent);
+      color:#fff;
+      text-decoration:none;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: 0 12px 20px rgba(194,31,31,.18);
+      transition: transform .12s ease, background .12s ease;
+      max-width: 260px;
+      width: auto;
+      white-space: nowrap;
+    }
+    .btn:hover{ background: var(--accent2); transform: translateY(-1px); }
+
+    .small{ font-size: 12px; color: var(--muted); }
+
+    @media (prefers-reduced-motion: reduce){
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- COVER -->
+  <header class="cover">
+    <img src="assets/cover.png" alt="Radio Diaspora Irlanda LIVE">
+  </header>
+
+  <!-- MAIN -->
+  <div class="wrap">
+    <div class="container">
+
+      <section class="card">
+        <h2>Ascultă Live</h2>
+        <p>Dacă playerul nu pornește automat, apasă Play.</p>
+
+        <iframe
+          class="player-embed"
+          src="https://listen.zeno.fm/player/radio-diaspora-irlanda-live"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          frameborder="0"
+          scrolling="no"
+          loading="lazy"
+        ></iframe>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    © <span id="y"></span> Radio Diaspora Irlanda • Live din online
+
+    <div class="footer-contact">
+      <a class="btn" href="mailto:contact@radiodiasporairlanda.live">Contactează-ne</a>
+      <div class="small">contact@radiodiasporairlanda.live</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
         linear-gradient(180deg, var(--bg1), var(--bg2));
     }
 

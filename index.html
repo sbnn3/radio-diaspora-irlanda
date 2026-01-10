@@ -7,6 +7,7 @@
 
   <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+  <script defer type="module" src="https://listen.zeno.fm/player.js"></script>
 
   <meta name="description" content="Radio Diaspora Irlanda LIVE — muzică românească și moldovenească pentru românii și moldovenii din Irlanda." />
 
@@ -221,14 +222,9 @@
             <h2>Ascultă Live</h2>
             <p>Dacă playerul nu pornește automat, apasă Play.</p>
 
-            <iframe
-              class="player-embed"
-              src="https://listen.zeno.fm/player/radio-diaspora-irlanda-live"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              frameborder="0"
-              scrolling="no"
-              loading="lazy"
-            ></iframe>
+            <div style="width: 350px;height: 150px;">
+              <zeno-player player-id="radio-diaspora-irlanda-live" />
+            </div>
           </section>
         </div>
 

@@ -42,13 +42,16 @@
     }
 
     .wrap{
-      flex:1;
+      flex: 1;
       display:flex;
       justify-content:center;
       padding:24px 12px 18px;
     }
 
-    .container{ width:100%; max-width:1200px; }
+    .container{
+      width:100%;
+      max-width:1200px;
+    }
 
     .grid{
       display:grid;
@@ -56,10 +59,14 @@
       gap:20px;
       max-width:1000px;
       margin:0 auto;
-      align-items:center;
+      align-items:start;
     }
+
     @media(min-width:860px){
-      .grid{ grid-template-columns:1fr 1fr; }
+      .grid{
+        grid-template-columns:1fr 1fr;
+        align-items:center;
+      }
     }
 
     .card{
@@ -69,42 +76,68 @@
       box-shadow:var(--shadow);
       padding:16px;
       backdrop-filter:blur(10px);
+      width:100%;
     }
 
     .cover-card img{
       width:100%;
+      height:auto;
       border-radius:14px;
       display:block;
     }
 
-    h2{ margin:0 0 6px; font-size:16px; text-align:center; }
-    p{ margin:0 0 12px; font-size:14px; color:var(--muted); text-align:center; }
-
-    .player-wrap{ display:flex; justify-content:center; }
-    .player-embed{
-      width:380px; height:180px; border:0;
-      border-radius:14px; background:#fff;
-      box-shadow:0 10px 24px rgba(0,0,0,.15);
-    }
-    @media(max-width:480px){
-      .player-embed{ width:100%; max-width:340px; }
-    }
-
-    /* ANUNT */
-    .notice{
-      max-width:1000px;
-      margin:18px auto 0;
-      background:rgba(255,255,255,.9);
-      border:1px solid var(--border);
-      border-radius:18px;
-      box-shadow:var(--shadow);
-      padding:14px;
+    .card h2{
+      margin:0 0 6px;
+      font-size:16px;
       text-align:center;
     }
-    .notice strong{ color:#c21f1f; }
 
-    /* CONTACT */
-    .contact-wrap{ max-width:1000px; margin:18px auto 0; }
+    .card p{
+      margin:0 0 12px;
+      font-size:14px;
+      color:var(--muted);
+      text-align:center;
+      line-height:1.35;
+    }
+
+    .player-wrap{
+      display:flex;
+      justify-content:center;
+    }
+
+    .player-embed{
+      width:380px;
+      height:180px;
+      border:0;
+      border-radius:14px;
+      background:#fff;
+      box-shadow:0 10px 24px rgba(0,0,0,.15);
+    }
+
+    @media(max-width:480px){
+      .player-embed{
+        width:100%;
+        max-width:340px;
+        height:180px;
+      }
+    }
+
+    /* Contact card (in body) */
+    .contact-wrap{
+      max-width: 1000px;
+      margin: 18px auto 0;
+    }
+
+    .contact-card{
+      text-align:center;
+    }
+
+    .contact-actions{
+      margin-top: 10px;
+      display:flex;
+      justify-content:center;
+    }
+
     .btn{
       padding:10px 18px;
       border-radius:999px;
@@ -115,141 +148,486 @@
       border:0;
       cursor:pointer;
       box-shadow:0 10px 20px rgba(194,31,31,.25);
+      transition:all .15s ease;
     }
-    .btn:hover{ background:var(--accent2); }
 
+    .btn:hover{
+      background:var(--accent2);
+      transform:translateY(-1px);
+    }
+
+    /* Footer (2 rows) */
     footer{
       background:#fff;
       border-top:1px solid var(--border);
     }
+
     .footer-inner{
       max-width:1000px;
       margin:0 auto;
-      padding:16px;
+      padding:16px 12px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
       text-align:center;
       font-size:12px;
       color:var(--muted);
     }
+
     .footer-links{
       display:flex;
       gap:14px;
-      justify-content:center;
       flex-wrap:wrap;
-      margin-bottom:8px;
+      justify-content:center;
+      font-size:12px;
     }
+
     .footer-links a{
       color:var(--link);
       text-decoration:none;
       font-weight:800;
     }
+    .footer-links a:hover{ text-decoration:underline; }
 
-    /* MARTISOR + PETALE */
-    #season-container{
+    /* Modal (Contact form) */
+    .modal-overlay{
       position:fixed;
       inset:0;
-      pointer-events:none;
-      z-index:9999;
-    }
-    .petal{
-      position:absolute;
-      top:-12px;
-      width:10px; height:10px;
-      background:rgba(255,182,193,.9);
-      border-radius:10px 0;
-      animation:fall linear;
-    }
-    @keyframes fall{
-      to{ transform:translateY(110vh) rotate(260deg); }
+      background: rgba(10,18,35,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px 12px;
+      z-index: 9997;
     }
 
-    #martisor{
-      position:fixed;
-      top:14px; right:14px;
-      display:none;
-      font-size:40px;
-      z-index:10000;
+    .modal{
+      width:min(680px, 100%);
+      background: rgba(255,255,255,.94);
+      border:1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 22px 70px rgba(0,0,0,.28);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
     }
+
+    .modal-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 14px 16px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .modal-title{
+      font-weight:900;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .modal-close{
+      border:0;
+      background: rgba(20,40,80,.10);
+      color:#1d2b44;
+      font-weight:900;
+      border-radius: 10px;
+      padding: 8px 10px;
+      cursor:pointer;
+    }
+    .modal-close:hover{ background: rgba(20,40,80,.16); }
+
+    .modal-body{ padding: 16px; }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media(min-width:640px){
+      .form-grid{ grid-template-columns: 1fr 1fr; }
+      .span-2{ grid-column: 1 / -1; }
+    }
+
+    label{
+      display:block;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    input, textarea{
+      width:100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+      background:#fff;
+      color: var(--text);
+      outline:none;
+    }
+
+    textarea{ min-height: 120px; resize: vertical; }
+
+    .form-actions{
+      display:flex;
+      gap: 10px;
+      justify-content:flex-end;
+      margin-top: 12px;
+      flex-wrap:wrap;
+    }
+
+    .btn-secondary{
+      background: rgba(20,40,80,.12);
+      color:#1d2b44;
+      box-shadow:none;
+    }
+    .btn-secondary:hover{ background: rgba(20,40,80,.18); }
+
+    .success{
+      display:none;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(46, 204, 113, .14);
+      border: 1px solid rgba(46, 204, 113, .25);
+      color: #124b2a;
+      font-weight: 900;
+      font-size: 13px;
+      text-align:center;
+    }
+
+    /* Cookie banner (index only) */
+    .cookie-banner{
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      z-index: 9998;
+      display: none;
+      justify-content: center;
+    }
+
+    .cookie-box{
+      width: min(980px, 100%);
+      background: rgba(255,255,255,.92);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 18px 50px rgba(14,30,55,.22);
+      backdrop-filter: blur(10px);
+      padding: 12px 14px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cookie-text{
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .cookie-text a{
+      color: var(--link);
+      text-decoration: none;
+      font-weight: 900;
+    }
+    .cookie-text a:hover{ text-decoration: underline; }
+
+    .cookie-actions{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .cookie-btn{
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .cookie-accept{
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(194,31,31,.20);
+    }
+    .cookie-accept:hover{ background: var(--accent2); }
+
+    .cookie-decline{
+      background: rgba(20,40,80,.12);
+      color: #1d2b44;
+    }
+    .cookie-decline:hover{ background: rgba(20,40,80,.18); }
+
+    @media (max-width: 520px){
+      .cookie-box{ flex-direction: column; align-items: stretch; }
+      .cookie-actions{ justify-content: center; }
+    }
+
+    #snow-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: #ffffff;
+      font-size: 10px;
+      opacity: 0.8;
+      user-select: none;
+      animation-name: fall;
+      animation-timing-function: linear;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
+
   </style>
 </head>
 
 <body>
-<div class="page-bg">
+  <div class="page-bg">
+    <div class="wrap">
+      <div class="container">
 
-  <div class="wrap">
-    <div class="container">
+        <div class="grid">
+          <!-- COVER -->
+          <section class="card cover-card">
+            <img src="assets/cover.png" href="https://radiodiasporairlanda.live" alt="Radio Diaspora Irlanda LIVE">
+          </section>
 
-      <div class="grid">
-        <section class="card cover-card">
-          <img src="assets/cover.png" alt="Radio Diaspora Irlanda LIVE">
-        </section>
+          <!-- PLAYER -->
+          <section class="card">
+            <h2>Ascultă Live</h2>
+            <p>Dacă playerul nu pornește automat, apasă Play.</p>
 
-        <section class="card">
-          <h2>Ascultă Live</h2>
-          <p>Dacă playerul nu pornește automat, apasă Play.</p>
-          <div class="player-wrap">
-            <iframe class="player-embed"
-              src="https://listen.zeno.fm/player/radio-diaspora-irlanda?autoplay=true"
-              allow="autoplay"></iframe>
+            <div class="player-wrap">
+              <iframe
+                class="player-embed"
+                src="https://listen.zeno.fm/player/radio-diaspora-irlanda?autoplay=true"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"></iframe>
+            </div>
+          </section>
+        </div>
+
+        <!-- CONTACT CARD (in body, centered) -->
+        <div class="contact-wrap">
+          <section class="card contact-card">
+            <p>Pentru sugestii, publicitate sau colaborări:</p>
+            <div class="contact-actions">
+              <button class="btn" type="button" onclick="openContact()">Contactează-ne</button>
+            </div>
+          </section>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FOOTER (2 rows only) -->
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a href="terms.html">Termeni și Condiții</a>
+          <a href="privacy.html">Politică de Confidențialitate</a>
+          <a href="cookies.html">Politică de Cookie-uri</a>
+        </div>
+        <div>© <span id="y"></span> Radio Diaspora Irlanda • Live din online</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- CONTACT MODAL -->
+  <div class="modal-overlay" id="contactModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-label="Formular de contact">
+      <div class="modal-head">
+        <div class="modal-title">Contactează-ne</div>
+        <button class="modal-close" type="button" onclick="closeContact()">Închide</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="contactForm" action="https://formspree.io/f/mreekyek" method="POST">
+          <div class="form-grid">
+            <div>
+              <label for="nume">Nume</label>
+              <input id="nume" name="Nume" type="text" autocomplete="family-name" required>
+            </div>
+
+            <div>
+              <label for="prenume">Prenume</label>
+              <input id="prenume" name="Prenume" type="text" autocomplete="given-name" required>
+            </div>
+
+            <div>
+              <label for="email">Adresa de email</label>
+              <input id="email" name="Email" type="email" autocomplete="email" required>
+            </div>
+
+            <div>
+              <label for="telefon">Număr de telefon</label>
+              <input id="telefon" name="Telefon" type="tel" autocomplete="tel">
+            </div>
+
+            <div class="span-2">
+              <label for="motiv">Motivul pentru care doriți să luați legătura cu noi</label>
+              <textarea id="motiv" name="Mesaj" placeholder="Scrie mesajul tău aici..." required></textarea>
+            </div>
           </div>
-        </section>
-      </div>
 
-      <!-- ANUNT -->
-      <div class="notice">
-        Cu părere de rău, <strong>Radio Diaspora Irlanda</strong> își va sista activitatea
-        începând cu <strong>16 februarie 2026</strong>.  
-        Vă mulțumim pentru susținere ❤️
-      </div>
+          <input type="hidden" name="_subject" value="Mesaj nou – Radio Diaspora Irlanda">
+          <input type="text" name="_gotcha" style="display:none">
 
-      <!-- CONTACT -->
-      <div class="contact-wrap">
-        <section class="card">
-          <p>Pentru sugestii, publicitate sau colaborări:</p>
-          <button class="btn" onclick="alert('Formularul rămâne activ ca înainte')">
-            Contactează-ne
-          </button>
-        </section>
-      </div>
+          <div class="form-actions">
+            <button class="btn btn-secondary" type="button" onclick="closeContact()">Renunță</button>
+            <button class="btn" type="submit">Trimite</button>
+          </div>
 
+          <div class="success" id="successMsg">
+            Mulțumim! Mesajul tău a fost trimis cu succes. Revenim cât de curând.
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-links">
-        <a href="terms.html">Termeni și Condiții</a>
-        <a href="privacy.html">Politică de Confidențialitate</a>
-        <a href="cookies.html">Politică de Cookie-uri</a>
+  <!-- COOKIE BANNER (index only) -->
+  <div class="cookie-banner" id="cookieBanner" aria-live="polite">
+    <div class="cookie-box" role="dialog" aria-label="Cookie consent">
+      <div class="cookie-text">
+        Folosim cookie-uri pentru a îmbunătăți experiența pe site. Poți accepta sau refuza cookie-urile neesențiale.
+        <a href="cookies.html">Află mai multe</a>.
       </div>
-      © <span id="y"></span> Radio Diaspora Irlanda • Live din online
+      <div class="cookie-actions">
+        <button class="cookie-btn cookie-decline" id="cookieDecline" type="button">Refuz</button>
+        <button class="cookie-btn cookie-accept" id="cookieAccept" type="button">Accept</button>
+      </div>
     </div>
-  </footer>
+  </div>
 
-</div>
+  <div id="snow-container"></div>
 
-<div id="season-container"></div>
-<div id="martisor">🎀</div>
+  <script>
+  const snowContainer = document.getElementById('snow-container');
 
-<script>
-  document.getElementById("y").textContent = new Date().getFullYear();
+  function createSnowflake() {
+    const snowflake = document.createElement('div');
+    snowflake.className = 'snowflake';
+    snowflake.innerHTML = '❄';
 
-  // SEZON
-  const now=new Date(), m=now.getMonth()+1, d=now.getDate();
-  const mart=document.getElementById("martisor");
-  const cont=document.getElementById("season-container");
+    snowflake.style.left = Math.random() * 100 + 'vw';
+    snowflake.style.fontSize = 6 + Math.random() * 10 + 'px';
+    snowflake.style.opacity = 0.3 + Math.random() * 0.7;
+    snowflake.style.animationDuration = 6 + Math.random() * 6 + 's';
 
-  if(m===3 && d<=7){ mart.style.display="block"; }
-  if(m===3 && d>=8 && d<=21){
-    setInterval(()=>{
-      const p=document.createElement("div");
-      p.className="petal";
-      p.style.left=Math.random()*100+"vw";
-      p.style.animationDuration=(6+Math.random()*6)+"s";
-      cont.appendChild(p);
-      setTimeout(()=>p.remove(),12000);
-    },220);
+    snowContainer.appendChild(snowflake);
+
+    // șterge fulgul după ce cade (curățenie)
+    setTimeout(() => {
+      snowflake.remove();
+    }, 12000);
   }
+
+  // creează fulgi continuu
+  setInterval(createSnowflake, 200);
 </script>
 
+
+  <script>
+    // Year
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    // Contact modal
+    const modal = document.getElementById("contactModal");
+    const successMsg = document.getElementById("successMsg");
+    const form = document.getElementById("contactForm");
+
+    function openContact(){
+      modal.style.display = "flex";
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      successMsg.style.display = "none";
+    }
+
+    function closeContact(){
+      modal.style.display = "none";
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    // Close modal on backdrop click
+    modal.addEventListener("click", (e) => {
+      if(e.target === modal) closeContact();
+    });
+
+    // Close modal on ESC
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && modal.style.display === "flex") closeContact();
+    });
+
+    // Custom success message (Formspree)
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      successMsg.style.display = "none";
+
+      try{
+        const data = new FormData(form);
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: data,
+          headers: { "Accept": "application/json" }
+        });
+
+        if(res.ok){
+          form.reset();
+          successMsg.style.display = "block";
+          setTimeout(() => closeContact(), 2500);
+        } else {
+          alert("Nu s-a putut trimite mesajul. Încearcă din nou, te rog.");
+        }
+      } catch(err){
+        alert("Eroare de conexiune. Încearcă din nou, te rog.");
+      }
+    });
+
+    // Cookie banner logic (index only)
+    const COOKIE_KEY = "rdi_cookie_consent"; // "accepted" | "declined"
+    const banner = document.getElementById("cookieBanner");
+    const btnAccept = document.getElementById("cookieAccept");
+    const btnDecline = document.getElementById("cookieDecline");
+
+    function showBanner(){ banner.style.display = "flex"; }
+    function hideBanner(){ banner.style.display = "none"; }
+
+    const saved = localStorage.getItem(COOKIE_KEY);
+    if(!saved){ showBanner(); }
+
+    btnAccept.addEventListener("click", () => {
+      localStorage.setItem(COOKIE_KEY, "accepted");
+      hideBanner();
+    });
+
+    btnDecline.addEventListener("click", () => {
+      localStorage.setItem(COOKIE_KEY, "declined");
+      hideBanner();
+    });
+  </script>
 </body>
 </html>
